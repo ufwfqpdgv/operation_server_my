@@ -54,3 +54,6 @@ sentry_dsn = "http://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf
     password = "gUcAFcWf#Dg4He7R"
     max_retries=3
     pool_size=200
+
+[web]
+    http_request_timeout=5 # s

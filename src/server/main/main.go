@@ -35,10 +35,14 @@ func main() {
 }
 
 func test() {
+	// temp()
 	// dbTest()
 	// redisTest()
 	// httpGetTest()
-	httpPostTest()
+	// httpPostTest()
+}
+
+func temp() {
 }
 
 func dbTest() {
@@ -84,7 +88,7 @@ func httpGetTest() {
 	}
 	rsp := &ShowResponse{}
 	retCode := utils.HttpGet("http://test.samh.xndm.tech/api/v1/operation/show",
-		utils.Struct2Map(rq), rsp)
+		utils.Struct2Map(rq), rsp, Config.Web.Http_request_timeout)
 	log.Debug(retCode)
 }
 
@@ -103,6 +107,6 @@ func httpPostTest() {
 	}
 	rsp := &JoinActivityResponse{}
 	retCode := utils.HttpPost("http://test.samh.xndm.tech/api/v1/operation/join/activity",
-		rq, rsp)
+		rq, rsp, Config.Web.Http_request_timeout)
 	log.Debug(retCode, rsp.Status)
 }

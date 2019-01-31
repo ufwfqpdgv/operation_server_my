@@ -42,6 +42,10 @@ type Config struct {
 	DB_arr             map[string]DB
 	Redis_item         Redis
 	Redis_cluster_item RedisCluster
+
+	Web struct {
+		Http_request_timeout int `required:"-"`
+	}
 }
 
 type Internal_serverStruct struct {

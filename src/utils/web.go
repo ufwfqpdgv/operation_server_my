@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"time"
+
 	"samh_common_lib/base"
 
 	log "github.com/cihub/seelog"
@@ -8,10 +10,11 @@ import (
 	resty "gopkg.in/resty.v1"
 )
 
-func HttpGet(url string, rq map[string]string, rsp interface{}) (retCode base.SamhResponseCode) {
+func HttpGet(url string, rq map[string]string, rsp interface{}, timeout int) (retCode base.SamhResponseCode) {
 	log.Debug(base.NowFunc())
 
 	log.Debug(spew.Sprintf("Request:%+v", rq))
+	resty.SetTimeout(time.Duration(timeout) * time.Second)
 	resp, err := resty.R().
 		SetQueryParams(rq).
 		SetResult(rsp).
@@ -27,31 +30,11 @@ func HttpGet(url string, rq map[string]string, rsp interface{}) (retCode base.Sa
 	return
 }
 
-func HttpPost(url string, rq interface{}, rsp interface{}) (retCode base.SamhResponseCode) {
+func HttpPost(url string, rq interface{}, rsp interface{}, timeout int) (retCode base.SamhResponseCode) {
 	log.Debug(base.NowFunc())
 
 	log.Debug(spew.Sprintf("Request:%+v", rq))
-	resp, err := resty.R().
-		SetBody(rq).
-		SetResult(rsp).
-		Post(url)
-	if err != nil {
-		retCode = base.SamhResponseCode_ServerError
-		log.Error(err, resp)
-		return
-	}
-	spew.Dump(resp)
-	spew.Dump(rsp)
-	retCode = base.SamhResponseCode_Succ
-	log.Debug(spew.Sprintf("Response:%+v", rsp))
-
-	return
-}
-
-func HttpPost2(url string, rq interface{}, rsp interface{}) (retCode base.SamhResponseCode) {
-	log.Debug(base.NowFunc())
-
-	log.Debug(spew.Sprintf("Request:%+v", rq))
+	resty.SetTimeout(time.Duration(timeout) * time.Second)
 	resp, err := resty.R().
 		SetBody(rq).
 		SetResult(rsp).
@@ -67,17 +50,15 @@ func HttpPost2(url string, rq interface{}, rsp interface{}) (retCode base.SamhRe
 	return
 }
 
-/* func HttpRequest(rq *VipRechargeRequest) (rsp *VipRechargeResponse, retCode base.SamhResponseCode) {
-	seelog.Debug(base.NowFunc())
-	seelog.Debugf(base.NowFunc()+"Request:%+v", *rq)
+//旧版本的只支持这样form的并把rq先转成json串的样式
+func HttpPost2(url string, rq interface{}, rsp interface{}, timeout int) (retCode base.SamhResponseCode) {
+	log.Debug(base.NowFunc())
 
-	rsp = &VipRechargeResponse{}
-	addr := ServiceConfig.GetString("VIP_server.Url") + "activity_vip_products/"
-	timeOut := time.Duration(ServiceConfig.GetInt("VIP_server.Time_out")) * time.Millisecond
-	resty.SetTimeout(timeOut)
-	b, err := json.Marshal(rq)
+	log.Debug(spew.Sprintf("Request:%+v", rq))
+	resty.SetTimeout(time.Duration(timeout) * time.Second)
+	b, err := Json.Marshal(rq)
 	if err != nil {
-		seelog.Error(err.Error())
+		log.Error(err.Error())
 		retCode = base.SamhResponseCode_Param_Invalid
 		return
 	}
@@ -85,19 +66,14 @@ func HttpPost2(url string, rq interface{}, rsp interface{}) (retCode base.SamhRe
 		SetHeader("Content-Type", "application/x-www-form-urlencoded").
 		SetBody(string(b)).
 		SetResult(rsp).
-		Post(addr)
-	if err == nil {
-		retCode = base.SamhResponseCode_Succ
-		if rsp.Code == base.SamhResponseCode_Succ {
-			seelog.Debugf(base.NowFunc()+"Response:%v,%+v", rsp.Code, *rsp)
-		} else {
-			seelog.Errorf(base.NowFuncError(), *rsp, resp)
-		}
-		return
-	} else {
-		seelog.Error(err.Error(), resp)
+		Post(url)
+	if err != nil {
 		retCode = base.SamhResponseCode_ServerError
+		log.Error(err, resp)
+		return
 	}
+	retCode = base.SamhResponseCode_Succ
+	log.Debug(spew.Sprintf("Response:%+v", rsp))
 
 	return
-} */
+}

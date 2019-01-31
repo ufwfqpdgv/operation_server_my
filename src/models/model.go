@@ -121,7 +121,7 @@ type JoinActivityResponse struct {
 		RewardSucc     int         `json:"reward_succ"`
 		Title          string      `json:"title"`
 		Content        string      `json:"content"`
-		RewardRuleType int         `json:"reward_rule_type" xorm:"default 0 comment('1-不需要充值什么的，直接请求奖励,2-需要充值之类的，直接请求VIP服务那边并把返回的data放到extra_data里') INT(11)"`
+		RewardRuleType int         `json:"reward_rule_type"`
 		ExtraData      interface{} `json:"extra_data"`
 	} `json:"data"`
 }
