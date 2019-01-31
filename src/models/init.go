@@ -45,19 +45,19 @@ func NewConfigWatcher() {
 			select {
 			case event, ok := <-watcher.Events:
 				if !ok {
+					log.Error(base.NowFuncError())
 					return
 				}
-				// log.Debug("event:", event)
-				if event.Op&fsnotify.Write == fsnotify.Write {
+				if event.Name == fmt.Sprintf("config/%s.toml", Env) && event.Op == fsnotify.Write {
 					log.Debug("modified file:", event.Name)
 					Init()
 				}
-
 			case err, ok := <-watcher.Errors:
 				if !ok {
+					log.Error(base.NowFuncError())
 					return
 				}
-				log.Error("error:", err)
+				log.Error(err)
 			}
 		}
 	}()

@@ -7,9 +7,12 @@ import (
 	"time"
 
 	. "models"
+	"samh_common_lib/base"
 	local_router "server/router"
-	// "utils"
-	// "github.com/davecgh/go-spew/spew"
+	"utils"
+
+	log "github.com/cihub/seelog"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func init() {
@@ -32,33 +35,74 @@ func main() {
 }
 
 func test() {
-	// activity := &Activity{}
-	// _, err := OperationDB.Select("*").Get(activity)
-	// if err != nil {
-	// panic(err)
-	// }
-	// spew.Dump(activity)
+	// dbTest()
+	// redisTest()
+	// httpGetTest()
+	httpPostTest()
+}
 
-	// v, err := RedisClient.Do("json.get", "object", ".").String()
-	// if err != nil {
-	// panic(err)
-	// }
-	// spew.Dump(v)
-	// o := &Object{}
-	// err = utils.Json.UnmarshalFromString(v, o)
-	// if err != nil {
-	// panic(err)
-	// }
-	// spew.Dump(o)
+func dbTest() {
+	activity := &Activity{}
+	_, err := OperationDB.Select("*").Get(activity)
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(activity)
 
-	// v, err := RedisClusterClient.Do("get", "lywob").Result()
-	// if err != nil {
-	// panic(err)
-	// }
-	// spew.Dump(v)
+	v, err := RedisClient.Do("json.get", "object", ".").String()
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(v)
+	o := &Object{}
+	err = utils.Json.UnmarshalFromString(v, o)
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(o)
+}
+
+func redisTest() {
+	v, err := RedisClusterClient.Do("get", "lywob").Result()
+	if err != nil {
+		panic(err)
+	}
+	spew.Dump(v)
 }
 
 type Object struct {
 	Foo string `json:"foo"`
 	Ans int    `json:"ans"`
+}
+
+func httpGetTest() {
+	rq := ShowRequest{
+		Uid:           1,
+		DeviceId:      "1",
+		FetchShowType: FetchShowTypeCode_All,
+		ShowType:      4,
+	}
+	rsp := &ShowResponse{}
+	retCode := utils.HttpGet("http://test.samh.xndm.tech/api/v1/operation/show",
+		utils.Struct2Map(rq), rsp)
+	log.Debug(retCode)
+}
+
+func httpPostTest() {
+	rq := &JoinActivityRequest{
+		SamhBaseRequest: base.SamhBaseRequest{
+			Uid:      1,
+			DeviceId: "1",
+		},
+		ActivityId:    1,
+		RewardRuleId:  1,
+		PayType:       1,
+		IsPaypal:      0,
+		ClientType:    "android",
+		ClientVersion: "2.0.4",
+	}
+	rsp := &JoinActivityResponse{}
+	retCode := utils.HttpPost("http://test.samh.xndm.tech/api/v1/operation/join/activity",
+		rq, rsp)
+	log.Debug(retCode, rsp.Status)
 }
