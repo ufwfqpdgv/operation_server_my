@@ -1,0 +1,37 @@
+# 可能是解析库的原因，如果类似下面这句放到任何[]之下的话，都会被认为是[]下的所属，故类似这种没有[]的，都得放到前面来
+sentry_dsn = "http://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf303420@47.99.39.114:9000/4"
+
+[base_info]
+    version = "0.1"
+    name = "samh-operation"
+    port = 10001
+    log_level="debug"
+
+[internal_server]
+    [internal_server.vip]
+        url = "http://47.98.52.122:9091/app_api/v5/activity_vip"
+        time_out = 500  # millisecond
+
+[db]
+    [db.operation]
+        host = "47.99.39.114"
+        port = 3306
+        user = "recommend"
+        password = "R1QaL1^G0Fpv8^ZT"
+        db_name = "samh_operation"
+        max_conns = 20
+        time_out = 300
+        [db.operation.table_name]
+            a = "a"
+            b = "b"
+    [db.samh]
+        host = "47.99.39.114"
+        port = 3306
+        user = "recommend"
+        password = "R1QaL1^G0Fpv8^ZT"
+        db_name = "samh"
+        max_conns = 20
+        time_out = 300
+        [db.samh.table_name]
+            c = "c"
+            d = "d"

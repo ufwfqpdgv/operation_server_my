@@ -1,0 +1,23 @@
+<seelog>
+    <outputs formatid="main">
+        <filter levels="warn">
+            <rollingfile type="date" filename="/data1/logs/samh/operation/warn/samh_warning.log"
+                         datepattern="2006-01-02" maxrolls="30"/>
+        </filter>
+        <filter levels="info">
+            <rollingfile type="date" filename="/data1/logs/samh/operation/records/samh_data.log"
+                         datepattern="2006-01-02" maxrolls="30"/>
+        </filter>
+        <filter levels="debug">
+            <rollingfile type="date" filename="/data1/logs/samh/operation/debug/samh_data_debug.log"
+                         datepattern="2006-01-02" maxrolls="7"/>
+        </filter>
+        <filter levels="error,critical">
+            <rollingfile type="date" filename="/data1/logs/samh/operation/error/samh_error.log"
+                         datepattern="2006-01-02" maxrolls="30"/>
+        </filter>
+    </outputs>
+    <formats>
+        <format id="main" format="[%Date %Time] [%Level] %File:%Line %Msg %n"/>
+    </formats>
+</seelog>
