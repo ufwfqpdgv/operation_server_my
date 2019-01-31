@@ -5,7 +5,14 @@ sentry_dsn = "http://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf
     version = "0.1"
     name = "samh-operation"
     port = 10001
-    log_level="debug"
+
+[log_info_item]
+    level="debug"
+    path_filename = "/data1/logs/samh/operation/log.log"
+    # max_size=  128    # 每个日志文件保存的最大尺寸 单位：M
+    # max_backups= 30   # 日志文件最多保存多少个备份
+    # max_age=     7    # 文件最多保存多少天
+    compress=true
 
 [internal_server]
     [internal_server.vip]

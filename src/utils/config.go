@@ -28,15 +28,15 @@ func ConfigInstance() (cfg *Config) {
 }
 
 type Config struct {
-	Sentry_dsn string `required:"-"`
+	Sentry_dsn string
 
 	Base_info struct {
-		Version   string `required:"-"`
-		Name      string `required:"-"`
-		Port      int    `required:"-"`
-		Log_level string `required:"-"`
+		Version string
+		Name    string
+		Port    int
 	}
 
+	Log_info_item   Log_info
 	Internal_server map[string]Internal_serverStruct
 
 	DB_arr             map[string]DB
@@ -44,42 +44,51 @@ type Config struct {
 	Redis_cluster_item RedisCluster
 
 	Web struct {
-		Http_request_timeout int `required:"-"`
+		Http_request_timeout int
 	}
 }
 
+type Log_info struct {
+	Level         string
+	Path_filename string
+	Max_size      int
+	Max_backups   int
+	Max_age       int
+	Compress      bool
+}
+
 type Internal_serverStruct struct {
-	Url      string `required:"-"`
-	Time_out int    `required:"-"`
+	Url      string
+	Time_out int
 }
 
 type DB struct {
-	Type      string `required:"-"`
-	Host      string `required:"-"`
-	Port      int    `required:"-"`
-	User      string `required:"-"`
-	Password  string `required:"-"`
-	Db_name   string `required:"-"`
-	Max_conns int    `required:"-"`
-	Time_out  int    `required:"-"`
-	Log_path  string `required:"-"`
-	Log_name  string `required:"-"`
+	Type      string
+	Host      string
+	Port      int
+	User      string
+	Password  string
+	Db_name   string
+	Max_conns int
+	Time_out  int
+	Log_path  string
+	Log_name  string
 	//
-	Table_name map[string]string `required:"-"`
+	Table_name map[string]string
 }
 
 type Redis struct {
-	Network     string `required:"-"`
-	Addr        string `required:"-"`
-	Password    string `required:"-"`
-	Max_retries int    `required:"-"`
-	Pool_size   int    `required:"-"`
+	Network     string
+	Addr        string
+	Password    string
+	Max_retries int
+	Pool_size   int
 }
 
 type RedisCluster struct {
-	Master_addr_arr []string `required:"-"`
-	Slave_addr_arr  []string `required:"-"`
-	Password        string   `required:"-"`
-	Max_retries     int      `required:"-"`
-	Pool_size       int      `required:"-"`
+	Master_addr_arr []string
+	Slave_addr_arr  []string
+	Password        string
+	Max_retries     int
+	Pool_size       int
 }

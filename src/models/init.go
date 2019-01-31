@@ -7,14 +7,17 @@ import (
 	"utils"
 
 	log "github.com/cihub/seelog"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-redis/redis"
 	"github.com/go-xorm/xorm"
+	"go.uber.org/zap"
 )
 
 var (
 	Env                string
 	Config             *utils.Config
+	Log                *zap.Logger
 	OperationDB        *xorm.Engine
 	SamhDB             *xorm.Engine
 	RedisClient        *redis.Client
@@ -24,6 +27,7 @@ var (
 func Init() {
 	utils.InitConfig(fmt.Sprintf("config/%s.toml", Env))
 	Config = utils.ConfigInstance()
+	Log = utils.InitLog(Config.Log_info)
 	OperationDB = utils.InitDB(Config.DB_arr["operation"])
 	SamhDB = utils.InitDB(Config.DB_arr["samh"])
 	RedisClient = utils.InitRedisClient(Config.Redis_item)
