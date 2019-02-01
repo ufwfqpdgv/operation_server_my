@@ -48,10 +48,21 @@ func InitLog(c Log_info) (logger *zap.Logger) {
 		atomicLevel.SetLevel(zap.PanicLevel)
 	case "fatal":
 		atomicLevel.SetLevel(zap.FatalLevel)
+	default:
+		panic("input on of 'debug、info、warn、error、panic、fatal'")
 	}
 
+	var encoder zapcore.Encoder
+	switch c.Encoding{
+	case "console":
+		encoder= zapcore.NewConsoleEncoder(encoderConfig)                                           // 编码器配置
+	case "json":
+		encoder= zapcore.NewJSONEncoder(encoderConfig)                                           // 编码器配置
+	default:
+		panic("input on of 'console、json'")
+	}
 	core := zapcore.NewCore(
-		zapcore.NewJSONEncoder(encoderConfig),                                           // 编码器配置
+		encoder,                                           // 编码器配置
 		zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(&hook)), // 打印到控制台和文件
 		atomicLevel, // 日志级别
 	)
@@ -64,6 +75,8 @@ func InitLog(c Log_info) (logger *zap.Logger) {
 	// filed := zap.Fields(zap.String("serviceName", "serviceName"))
 	// 构造日志
 	logger = zap.New(core, caller, development, filed)
+
+	logger.Info(
 
 	return
 }

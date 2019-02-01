@@ -50,6 +50,7 @@ type Config struct {
 
 type Log_info struct {
 	Level         string
+	Encoding      string
 	Path_filename string
 	Max_size      int
 	Max_backups   int
