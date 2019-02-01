@@ -4,20 +4,18 @@ import (
 	"github.com/jinzhu/configor"
 )
 
-var (
-	__cfg *Config
-)
+var _cfg *Config
 
 func Init(configFilePath string) {
-	__cfg = &Config{}
-	err := configor.Load(__cfg, configFilePath)
+	_cfg = &Config{}
+	err := configor.Load(_cfg, configFilePath)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func ConfigInstance() (cfg *Config) {
-	return __cfg
+	return _cfg
 }
 
 type Config struct {
