@@ -8,6 +8,7 @@ import (
 
 func ActivityApi(rq *ActivityRequest) (rsp *ActivityResponse, retCode base.SamhResponseCode) {
 	log.Debug(base.NowFunc())
+	defer log.Debug(base.NowFunc() + " end")
 
 	retCode = base.SamhResponseCode_Succ
 	rsp = &ActivityResponse{}
