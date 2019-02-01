@@ -10,15 +10,14 @@ import (
 )
 
 func ActivityApi(c *gin.Context) {
-	log.Debug(base.NowFunc() + "Start")
 	defer base.RecoverFunc(c)
 
 	rq := &ActivityRequest{}
 	err := c.ShouldBind(rq)
-	log.Debugf(base.NowFunc()+"Request:%+v", *rq)
+	log.Infof(base.NowFunc()+"Request:%+v", *rq)
 	if err == nil {
 		rsp, retCode := process_api.ActivityApi(rq)
-		log.Debugf(base.NowFunc()+"Response:%v,%+v", retCode, *rsp)
+		log.Infof(base.NowFunc()+"Response:%v,%+v", retCode, *rsp)
 		base.SendResponse(c, retCode, rsp)
 	} else {
 		log.Warn(base.NowFuncError())
