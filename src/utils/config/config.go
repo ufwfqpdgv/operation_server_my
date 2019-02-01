@@ -79,6 +79,8 @@ type Redis struct {
 	Password    string
 	Max_retries int
 	Pool_size   int
+	Prefix      string
+	Time_out    int
 }
 
 type RedisCluster struct {
@@ -87,4 +89,6 @@ type RedisCluster struct {
 	Password        string
 	Max_retries     int
 	Pool_size       int
+	Prefix          string
+	Time_out        int
 }

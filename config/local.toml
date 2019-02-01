@@ -1,5 +1,5 @@
 # 可能是解析库的原因，如果类似下面这句放到任何[]之下的话，都会被认为是[]下的所属，故类似这种没有[]的，都得放到前面来
-sentry_dsn= "http://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf303420@47.99.39.114:9000/4"
+sentry_dsn= "ahttp://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf303420@47.99.39.114:9000/4"
 
 [base_info]
     version = "0.1"
@@ -51,12 +51,15 @@ sentry_dsn= "http://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf3
         [db_arr.samh.table_name]
             c = "c"
             d = "d"
+
 [redis_item]
     network="tcp"
     addr = "127.0.0.1:6379"
     password = "abc123"
     max_retries=3
     pool_size=200
+    prefix="operation:" #此服务的redis key的前缀，推荐具体格式 服务名:业务名:表名，然后里存json，这样缓存如整张表的时候就可以直接根据json中的key(对应主键)来取了
+    time_out=604800 #86400*7
 
 [redis_cluster_item]
     master_addr_arr = ["47.99.39.114:7000","47.99.39.114:7001","47.99.39.114:7002"]
@@ -64,6 +67,8 @@ sentry_dsn= "http://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf3
     password = "gUcAFcWf#Dg4He7R"
     max_retries=3
     pool_size=200
+    prefix="operation:" #此服务的redis key的前缀，推荐具体格式 服务名:表名（业务名），然后里存json，这样缓存如整张表的时候就可以直接根据json中的key(对应主键)来取了
+    time_out=604800 #86400*7
 
 [web]
     http_request_timeout=5 # s

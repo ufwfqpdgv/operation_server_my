@@ -10,6 +10,7 @@ import (
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/fsnotify/fsnotify"
+	"github.com/getsentry/raven-go"
 	"github.com/go-redis/redis"
 	"github.com/go-xorm/xorm"
 )
@@ -29,11 +30,14 @@ func Init() {
 	spew.Printf("config init succ,filepath:%s\n", filePath)
 	Config = config.ConfigInstance()
 	log.Init(Config.Log_info_item)
-	log.Debug(spew.Sdump(Config))
 	OperationDB = utils.InitDB(Config.DB_arr["operation"])
 	SamhDB = utils.InitDB(Config.DB_arr["samh"])
 	RedisClient = utils.InitRedisClient(Config.Redis_item)
 	RedisClusterClient = utils.InitRedisCluster(Config.Redis_cluster_item)
+	err := raven.SetDSN(Config.Sentry_dsn)
+	if err != nil {
+		log.Panic(err)
+	}
 }
 
 func NewConfigWatcher() {

@@ -5,6 +5,7 @@ export GOARCH=amd64
 export CGO_ENABLED=0
 export GOPATH=${GOPATH}:$(pwd)
 
+env=local
 server_name=samh-operation
 server_path=src/server/main/main.go
 server_name_test=${server_name}"-test"
@@ -17,10 +18,10 @@ then
     go build -o bin/${server_name_test} ${server_path_test}
 elif [[ $1 == "t" ]]
 then
-    ./bin/$server_name_test
+    ./bin/$server_name_test ${env}
 elif [[ $1 == "r" ]]
 then
-    ./bin/${server_name}
+    ./bin/${server_name} ${env}
 elif [[ $1 == "p" ]]
 then
     mkdir -p ${server_name}/bin

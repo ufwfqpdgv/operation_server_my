@@ -28,12 +28,12 @@ func InitDB(cfg config.DB) (db *xorm.Engine) {
 	var err error
 	db, err = xorm.NewEngine(cfg.Type, connectStr)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	db.SetMapper(core.GonicMapper{})
@@ -43,17 +43,17 @@ func InitDB(cfg config.DB) (db *xorm.Engine) {
 
 	exist, err := pathExists(cfg.Log_path)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 	if !exist {
 		err = os.Mkdir(cfg.Log_path, os.ModePerm)
 		if err != nil {
-			panic(err)
+			log.Panic(err)
 		}
 	}
 	f, err := os.Create(cfg.Log_path + cfg.Log_name)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 	db.SetLogger(xorm.NewSimpleLogger(f))
 

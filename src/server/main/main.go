@@ -37,7 +37,8 @@ func main() {
 func test() {
 	// temp()
 	// dbTest()
-	// redisTest()
+	// redisClientTest()
+	// redisClusterTest()
 	// httpGetTest()
 	// httpPostTest()
 }
@@ -53,20 +54,45 @@ func dbTest() {
 	}
 	spew.Dump(activity)
 
-	v, err := RedisClient.Do("json.get", "object", ".").String()
+}
+
+func redisClientTest() {
+	var err error
+	o1 := Object{
+		Foo: "111",
+		Ans: 123,
+	}
+	s, err := utils.Json.MarshalToString(o1)
 	if err != nil {
 		panic(err)
 	}
-	spew.Dump(v)
+	key := Config.Redis_item.Prefix + "object"
+	err = RedisClient.Do("json.set", key, ".", s).Err()
+	if err != nil {
+		panic(err)
+	}
+	sta := "gg"
+	// err = RedisClient.Do("json.set", key, ".foo", `"abcaa"`).Err()
+	err = RedisClient.Do("json.set", key, ".foo", fmt.Sprintf(`"%v"`, sta)).Err()
+
+	if err != nil {
+		panic(err)
+	}
+
+	v, err := RedisClient.Do("json.get", key, ".").String()
+	if err != nil {
+		panic(err)
+	}
+	log.Debug(v)
 	o := &Object{}
 	err = utils.Json.UnmarshalFromString(v, o)
 	if err != nil {
 		panic(err)
 	}
-	spew.Dump(o)
+	log.Debugf("%v____%+v", key, o)
 }
 
-func redisTest() {
+func redisClusterTest() {
 	v, err := RedisClusterClient.Do("get", "lywob").Result()
 	if err != nil {
 		panic(err)

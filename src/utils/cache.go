@@ -23,7 +23,7 @@ func InitRedisClient(rc config.Redis) (client *redis.Client) {
 	})
 	err := client.Ping().Err()
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	return
@@ -56,11 +56,11 @@ func InitRedisCluster(rc config.RedisCluster) (clusterClient *redis.ClusterClien
 	var err error
 	err = clusterClient.Ping().Err()
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 	err = clusterClient.ReloadState()
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 
 	return
