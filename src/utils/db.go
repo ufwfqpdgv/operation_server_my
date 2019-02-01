@@ -8,6 +8,7 @@ import (
 	"utils/config"
 	"utils/log"
 
+	// "github.com/davecgh/go-spew/spew"
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 )
@@ -51,11 +52,20 @@ func InitDB(cfg config.DB) (db *xorm.Engine) {
 			log.Panic(err)
 		}
 	}
-	f, err := os.Create(cfg.Log_path + cfg.Log_name)
-	if err != nil {
-		log.Panic(err)
+	pathFileName := cfg.Log_path + cfg.Log_name
+	file, err := os.Open(pathFileName)
+	if err != nil && os.IsNotExist(err) {
+		file, err = os.Create(pathFileName)
+		if err != nil {
+			log.Panic(err)
+		}
+	} else {
+		file, err = os.OpenFile(pathFileName, os.O_WRONLY|os.O_APPEND, 0666)
+		if err != nil {
+			log.Panic(err)
+		}
 	}
-	db.SetLogger(xorm.NewSimpleLogger(f))
+	db.SetLogger(xorm.NewSimpleLogger(file))
 
 	return
 }

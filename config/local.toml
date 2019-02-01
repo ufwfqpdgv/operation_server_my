@@ -32,8 +32,8 @@ sentry_dsn= "ahttp://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf
         db_name = "samh_operation"
         max_conns = 20
         time_out = 300
-        log_path = "/data1/logs/samh/operation/db/"
-        log_name = "sql.log"
+        log_path = "/data1/logs/samh/operation/"
+        log_name = "log.log"
         [db_arr.operation.table_name]
             a = "a"
             b = "b"
@@ -46,8 +46,8 @@ sentry_dsn= "ahttp://da3139a4014c431a9024a3b0b3eb9da7:c387db95d2384d83b594f984cf
         db_name = "samh"
         max_conns = 20
         time_out = 300
-        log_path = "/data1/logs/samh/operation/db/"
-        log_name = "sql.log"
+        log_path = "/data1/logs/samh/operation/"
+        log_name = "log.log"
         [db_arr.samh.table_name]
             c = "c"
             d = "d"
