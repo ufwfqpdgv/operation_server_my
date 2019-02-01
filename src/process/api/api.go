@@ -3,8 +3,7 @@ package api
 import (
 	. "models"
 	"samh_common_lib/base"
-
-	log "github.com/cihub/seelog"
+	"utils/log"
 )
 
 func ActivityApi(rq *ActivityRequest) (rsp *ActivityResponse, retCode base.SamhResponseCode) {

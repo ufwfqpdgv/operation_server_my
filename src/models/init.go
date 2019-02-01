@@ -5,19 +5,18 @@ import (
 
 	"samh_common_lib/base"
 	"utils"
+	"utils/config"
+	"utils/log"
 
-	log "github.com/cihub/seelog"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-redis/redis"
 	"github.com/go-xorm/xorm"
-	"go.uber.org/zap"
 )
 
 var (
 	Env                string
-	Config             *utils.Config
-	Log                *zap.Logger
+	Config             *config.Config
 	OperationDB        *xorm.Engine
 	SamhDB             *xorm.Engine
 	RedisClient        *redis.Client
@@ -25,9 +24,12 @@ var (
 )
 
 func Init() {
-	utils.InitConfig(fmt.Sprintf("config/%s.toml", Env))
-	Config = utils.ConfigInstance()
-	Log = utils.InitLog(Config.Log_info)
+	filePath := fmt.Sprintf("config/%s.toml", Env)
+	config.Init(filePath)
+	spew.Printf("config init succ,filepath:%s\n", filePath)
+	Config = config.ConfigInstance()
+	log.Init(Config.Log_info_item)
+	log.Debug(spew.Sdump(Config))
 	OperationDB = utils.InitDB(Config.DB_arr["operation"])
 	SamhDB = utils.InitDB(Config.DB_arr["samh"])
 	RedisClient = utils.InitRedisClient(Config.Redis_item)

@@ -1,9 +1,6 @@
-package utils
+package config
 
 import (
-	"samh_common_lib/base"
-
-	log "github.com/cihub/seelog"
 	"github.com/jinzhu/configor"
 )
 
@@ -11,16 +8,12 @@ var (
 	__cfg *Config
 )
 
-func InitConfig(configFilePath string) {
-	log.Debug(base.NowFunc())
-
+func Init(configFilePath string) {
 	__cfg = &Config{}
 	err := configor.Load(__cfg, configFilePath)
 	if err != nil {
-		log.Error(err)
 		panic(err)
 	}
-	log.Debugf("config init succ,filepath:%s", configFilePath)
 }
 
 func ConfigInstance() (cfg *Config) {
@@ -49,13 +42,15 @@ type Config struct {
 }
 
 type Log_info struct {
-	Level         string
-	Encoding      string
-	Path_filename string
-	Max_size      int
-	Max_backups   int
-	Max_age       int
-	Compress      bool
+	Level            string
+	Encoding         string
+	Stdout           bool
+	Development_mode bool
+	Path_filename    string
+	Max_size         int
+	Max_backups      int
+	Max_age          int
+	Compress         bool
 }
 
 type Internal_serverStruct struct {

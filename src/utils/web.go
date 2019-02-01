@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"samh_common_lib/base"
+	"utils/log"
 
-	log "github.com/cihub/seelog"
 	"github.com/davecgh/go-spew/spew"
 	resty "gopkg.in/resty.v1"
 )

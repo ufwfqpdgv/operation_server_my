@@ -3,7 +3,8 @@ package utils
 import (
 	"fmt"
 
-	log "github.com/cihub/seelog"
+	"utils/log"
+
 	"github.com/json-iterator/go"
 	"github.com/viant/toolbox"
 )

@@ -15,7 +15,7 @@ func Log() gin.HandlerFunc {
 		if referer == "" {
 			referer = "-"
 		}
-		/*seelog.Debugf(`%s "%s %s" %s %d %s %s`,
+		/*log.Debugf(`%s "%s %s" %s %d %s %s`,
 		c.Request.RemoteAddr,
 		c.Request.Method, c.Request.RequestURI, latency, c.Writer.Status(),
 		referer, c.Request.Header)*/

@@ -5,13 +5,14 @@ import (
 	"os"
 
 	"samh_common_lib/base"
+	"utils/config"
+	"utils/log"
 
-	log "github.com/cihub/seelog"
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 )
 
-func InitDB(cfg DB) (db *xorm.Engine) {
+func InitDB(cfg config.DB) (db *xorm.Engine) {
 	log.Debug(base.NowFunc())
 
 	db = &xorm.Engine{}

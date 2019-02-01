@@ -4,8 +4,8 @@ import (
 	. "models"
 	process_api "process/api"
 	"samh_common_lib/base"
+	"utils/log"
 
-	log "github.com/cihub/seelog"
 	"github.com/gin-gonic/gin"
 )
 

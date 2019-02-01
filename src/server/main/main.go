@@ -10,8 +10,8 @@ import (
 	"samh_common_lib/base"
 	local_router "server/router"
 	"utils"
+	"utils/log"
 
-	log "github.com/cihub/seelog"
 	"github.com/davecgh/go-spew/spew"
 )
 
@@ -86,10 +86,12 @@ func httpGetTest() {
 		FetchShowType: FetchShowTypeCode_All,
 		ShowType:      4,
 	}
+	log.Debugf("%+v", rq)
 	rsp := &ShowResponse{}
 	retCode := utils.HttpGet("http://test.samh.xndm.tech/api/v1/operation/show",
 		utils.Struct2Map(rq), rsp, Config.Web.Http_request_timeout)
-	log.Debug(retCode)
+	log.Debugf("code:%v\nrsp:%v", retCode, spew.Sprintf("%+v", rsp))
+	// log.With(zap.string("key","value").Debug(retCode)
 }
 
 func httpPostTest() {

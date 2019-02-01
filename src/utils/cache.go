@@ -5,12 +5,13 @@ import (
 	// "time"
 
 	"samh_common_lib/base"
+	"utils/config"
+	"utils/log"
 
-	log "github.com/cihub/seelog"
 	"github.com/go-redis/redis"
 )
 
-func InitRedisClient(rc Redis) (client *redis.Client) {
+func InitRedisClient(rc config.Redis) (client *redis.Client) {
 	log.Debug(base.NowFunc())
 
 	client = redis.NewClient(&redis.Options{
@@ -28,7 +29,7 @@ func InitRedisClient(rc Redis) (client *redis.Client) {
 	return
 }
 
-func InitRedisCluster(rc RedisCluster) (clusterClient *redis.ClusterClient) {
+func InitRedisCluster(rc config.RedisCluster) (clusterClient *redis.ClusterClient) {
 	log.Debug(base.NowFunc())
 
 	clusterClient = redis.NewClusterClient(&redis.ClusterOptions{
