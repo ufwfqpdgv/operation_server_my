@@ -28,12 +28,17 @@ func Init() {
 	filePath := fmt.Sprintf("config/%s.toml", Env)
 	config.Init(filePath)
 	spew.Printf("config init succ,filepath:%s\n", filePath)
+
 	Config = config.ConfigInstance()
+
 	log.Init(Config.Log_info_item)
+
 	OperationDB = utils.InitDB(Config.DB_arr["operation"])
 	SamhDB = utils.InitDB(Config.DB_arr["samh"])
+
 	RedisClient = utils.InitRedisClient(Config.Redis_item)
 	RedisClusterClient = utils.InitRedisCluster(Config.Redis_cluster_item)
+
 	err := raven.SetDSN(Config.Sentry_dsn)
 	if err != nil {
 		log.Panic(err)
