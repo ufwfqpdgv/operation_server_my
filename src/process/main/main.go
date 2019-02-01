@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"time"
 
 	. "models"
@@ -16,6 +15,7 @@ func init() {
 	Env = *flag.String("env", "local", "env:local,dev,test,official")
 	flag.Parse()
 	Init()
+	go NewConfigWatcher()
 }
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 }
 
 func ActivityApiTest() {
-	fmt.Println("\n ActivityApiTest")
+	spew.Dump("ActivityApiTest")
 	start := time.Now()
 	request := &ActivityRequest{
 		SamhBaseRequest:   base.SamhBaseRequest{Uid: 1, DeviceId: "1"},
@@ -35,5 +35,5 @@ func ActivityApiTest() {
 	rsp, retCode := api.ActivityApi(request)
 	spew.Dump(retCode, rsp)
 	cost := time.Since(start)
-	fmt.Println("cost=", cost)
+	spew.Dump("cost=", cost)
 }
