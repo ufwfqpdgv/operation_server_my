@@ -29,7 +29,6 @@ func dbTest() {
 	if err != nil {
 		panic(err)
 	}
-	// spew.Dump(activity)
 	log.Debug(activity)
 }
 

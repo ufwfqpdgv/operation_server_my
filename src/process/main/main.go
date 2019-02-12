@@ -7,8 +7,7 @@ import (
 	. "models"
 	"process/api"
 	"samh_common_lib/base"
-
-	"github.com/davecgh/go-spew/spew"
+	"utils/log"
 )
 
 func init() {
@@ -23,7 +22,7 @@ func main() {
 }
 
 func ActivityApiTest() {
-	spew.Dump("ActivityApiTest")
+	log.Debug("ActivityApiTest")
 	start := time.Now()
 	request := &ActivityRequest{
 		SamhBaseRequest:   base.SamhBaseRequest{Uid: 1, DeviceId: "1"},
@@ -31,9 +30,9 @@ func ActivityApiTest() {
 		ActivityId:        1,
 		ActivityType:      ActivityTypeCode_Vip,
 	}
-	spew.Dump(request)
+	log.Debug(request)
 	rsp, retCode := api.ActivityApi(request)
-	spew.Dump(retCode, rsp)
+	log.Debug(retCode, rsp)
 	cost := time.Since(start)
-	spew.Dump("cost=", cost)
+	log.Debug(cost)
 }
