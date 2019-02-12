@@ -7,6 +7,7 @@ import (
 
 	"utils/config"
 
+	"github.com/davecgh/go-spew/spew"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -14,6 +15,7 @@ import (
 
 type Log struct {
 	*zap.Logger
+	Config config.Log_info
 }
 
 var l *Log
@@ -98,6 +100,7 @@ func Init(c config.Log_info) {
 	// 构造日志
 	l = &Log{}
 	l.Logger = zap.New(core, optionArr...)
+	l.Config = c
 
 	return
 }
@@ -113,50 +116,98 @@ func With(fields ...zap.Field) *Log {
 }
 
 func Debug(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Debug(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Debug(fmt.Sprint(msg...))
 }
 
 func Debugf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Debug(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Debug(fmt.Sprintf(format, msg...))
 }
 
 func Info(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Info(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Info(fmt.Sprint(msg...))
 }
 
 func Infof(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Info(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Info(fmt.Sprintf(format, msg...))
 }
 
 func Warn(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Warn(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Warn(fmt.Sprint(msg...))
 }
 
 func Warnf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Warn(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Warn(fmt.Sprintf(format, msg...))
 }
 
 func Error(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Error(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Error(fmt.Sprint(msg...))
 }
 
 func Errorf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Error(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Error(fmt.Sprintf(format, msg...))
 }
 
 func Panic(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Panic(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Panic(fmt.Sprint(msg...))
 }
 
 func Panicf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Panic(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Panic(fmt.Sprintf(format, msg...))
 }
 
 func Fatal(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Fatal(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Fatal(fmt.Sprint(msg...))
 }
 
 func Fatalf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Fatal(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Fatal(fmt.Sprintf(format, msg...))
 }
 
@@ -166,49 +217,97 @@ func (*Log) With(fields ...zap.Field) *Log {
 }
 
 func (*Log) Debug(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Debug(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Debug(fmt.Sprint(msg...))
 }
 
 func (*Log) Debugf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Debug(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Debug(fmt.Sprintf(format, msg...))
 }
 
 func (*Log) Info(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Info(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Info(fmt.Sprint(msg...))
 }
 
 func (*Log) Infof(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Info(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Info(fmt.Sprintf(format, msg...))
 }
 
 func (*Log) Warn(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Warn(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Warn(fmt.Sprint(msg...))
 }
 
 func (*Log) Warnf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Warn(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Warn(fmt.Sprintf(format, msg...))
 }
 
 func (*Log) Error(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Error(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Error(fmt.Sprint(msg...))
 }
 
 func (*Log) Errorf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Error(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Error(fmt.Sprintf(format, msg...))
 }
 
 func (*Log) Panic(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Panic(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Panic(fmt.Sprint(msg...))
 }
 
 func (*Log) Panicf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Panic(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Panic(fmt.Sprintf(format, msg...))
 }
 
 func (*Log) Fatal(msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Fatal(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Fatal(fmt.Sprint(msg...))
 }
 
 func (*Log) Fatalf(format string, msg ...interface{}) {
+	if l.Config.Level == "debug" {
+		l.Logger.Fatal(spew.Sdump(msg...))
+		return
+	}
 	l.Logger.Fatal(fmt.Sprintf(format, msg...))
 }

@@ -13,7 +13,7 @@ import (
 
 func test() {
 	// temp()
-	// dbTest()
+	dbTest()
 	// redisClientTest()
 	// redisClusterTest()
 	// httpGetTest()
@@ -29,8 +29,8 @@ func dbTest() {
 	if err != nil {
 		panic(err)
 	}
-	spew.Dump(activity)
-
+	// spew.Dump(activity)
+	log.Debug(activity)
 }
 
 func redisClientTest() {

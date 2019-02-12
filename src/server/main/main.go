@@ -15,6 +15,7 @@ func init() {
 	flag.Parse()
 	models.Init()
 	go models.NewConfigWatcher()
+	test()
 }
 
 func main() {
